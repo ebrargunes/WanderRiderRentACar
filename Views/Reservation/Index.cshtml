@@ -1,0 +1,122 @@
+@model ReservationMainModel
+
+<style>
+    .mt-3 {margin-top: 1rem;}
+    .text-center {margin-bottom: 3rem;}
+    .form-control {height: 50px;}
+    #reserveBtn {height: 50px;}
+    #reservationForm {margin-bottom: 3rem;}
+    .row{margin-bottom: 3rem;}
+</style>
+
+<partial name="_BreadCrumbPartial" model=@Model.BreadCrumb />
+
+<input type="hidden" asp-for="@Model.Car.CarId">
+
+<div class="container mt-5 tooltip-container">
+    <div class="row">
+        <!-- Araç Bilgileri -->
+        <div class="col-md-4">
+            <div class="card shadow-sm text-center">
+                <img src="@Model.Car.ImageUrl" class="card-img-top" alt="@Model.Car.CarName">
+                <div class="card-body">
+                    <h5 class="card-title d-none">@Model.Car.CarName</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>Depozito:</strong> @Model.Car.DepositPrice</li>
+                        <li class="list-group-item"><strong>Yakıt Tipi:</strong> @Model.Car.FuelTypeName</li>
+                        <li class="list-group-item"><strong>Model:</strong> @Model.Car.Model</li>
+                        <li class="list-group-item"><strong>Mağaza:</strong> @Model.Car.RentStoresName</li>
+                        <li class="list-group-item"><strong>Segment:</strong> @Model.Car.SegmentName</li>
+                        <li class="list-group-item"><strong>Vites:</strong> @Model.Car.TransmissionName</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kullanıcı Formu -->
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Rezervasyon Bilgileri</h5>
+                    <form id="reservationForm" action="/Reservation/Index" method="POST">
+                        <input type="hidden" asp-for="SelCarId">
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="exampleUserName" class="form-label">Ad (*)</label>
+                                <input type="text" class="form-control" id="exampleUserName"
+                                    asp-for="@Model.User.UserName" placeholder="Adınızı giriniz.">
+                                <span asp-validation-for="@Model.User.UserName" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="exampleUserSurname" class="form-label">Soyad (*)</label>
+                                <input type="text" class="form-control" id="exampleUserSurname"
+                                    asp-for="@Model.User.UserSurname" placeholder="Soyadınızı giriniz.">
+                                <span asp-validation-for="@Model.User.UserSurname" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <label for="exampleInputEmail1" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1"
+                                asp-for="@Model.User.UserEmail" placeholder="Email giriniz.">
+                            <span asp-validation-for="@Model.User.UserEmail" class="text-danger"></span>
+                        </div>
+
+                        <div class="mt-3">
+                            <label for="exampleAdress" class="form-label">Adres</label>
+                            <input type="text" class="form-control" id="exampleAdress"
+                                asp-for="@Model.User.UserAddress" placeholder="Adres giriniz.">
+                            <span asp-validation-for="@Model.User.UserAddress" class="text-danger"></span>
+                        </div>
+
+                        <div class="row g-3 mt-3">
+                            <div class="col-md-6">
+                                <label for="examplePhoneNumber" class="form-label">Telefon</label>
+                                <input type="text" class="form-control" id="examplePhoneNumber"
+                                    asp-for="@Model.User.UserPhone" placeholder="Telefon numaranızı giriniz.">
+                                <span asp-validation-for="@Model.User.UserPhone" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="exampleDrivingLicense" class="form-label">Ehliyet No</label>
+                                <input type="text" class="form-control" id="exampleDrivingLicense"
+                                    asp-for="@Model.User.LicenceNo" placeholder="Ehliyet numaranızı giriniz."
+                                    maxlength="6">
+                                <span asp-validation-for="@Model.User.LicenceNo" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-check mt-3">
+                            <input type="checkbox" class="form-check-input" id="agreementCheck"
+                                asp-for="AcceptedAgreement">
+                            <label class="form-check-label" for="agreementCheck">
+                                Kiralama Sözleşmesini okudum, kabul ediyorum.
+                            </label>
+                            <span asp-validation-for="@Model.AcceptedAgreement" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-check mt-2">
+                            <input type="checkbox" class="form-check-input" id="notificationCheck"
+                                asp-for="AcceptedNotifications">
+                            <label class="form-check-label" for="notificationCheck">
+                                Kampanyalar hakkında bildirim almayı kabul ediyorum.
+                            </label>
+                            <span asp-validation-for="@Model.AcceptedNotifications" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" id="reserveBtn" class="btn btn-primary mt-3 w-100">
+                            <i class="fas fa-car"></i> Rezerve Et
+                        </button>
+
+                        @if (TempData["Message"] != null)
+                        {
+                            <div class="alert alert-info mt-3">
+                                <h5>@TempData["Message"]</h5>
+                            </div>
+                        }
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

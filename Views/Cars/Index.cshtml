@@ -1,0 +1,102 @@
+@model CarsPageMainModel
+
+<partial name="_BreadCrumbPartial" model=Model.BreadCrumb />
+
+<form style="margin: 10rem 5rem;" action="/Cars/Index" method="post">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="choose"><h3>Araç Seçimi</h3></div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <div class="box"><h5 <i class="bi bi-gear-wide-connected"></i> &nbsp; Vites Tipi</h5></div>
+                        @foreach (var item in Model.Transmissions)
+                        {
+                            <div class="form-check">
+                                <input 
+                                @(item.TransmissionId == Model.SelTransmissionId ? "checked" : "")
+                                type="radio" 
+                                class="form-check-input auto-submit" 
+                                name="SelTransmissionId"
+                                value="@item.TransmissionId" 
+                                />
+                                <label class="form-check-label">@item.TransmissionName</label>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="form-group">
+                       <div class="box"><h5 <i class="bi bi-fuel-pump-diesel"></i> &nbsp; Yakıt Tipi</h5></div> 
+                        @foreach (var item in Model.FuelTypes)
+                        {
+                            <div class="form-check">
+                                <input
+                                 @(item.FuelTypeId == Model.SelFuelTypeId ? "checked" : "")
+                                 type="radio" class="form-check-input auto-submit" name="SelFuelTypeId"
+                                    value="@item.FuelTypeId" />
+                                <label class="form-check-label">@item.FuelTypeName</label>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="form-group">
+                       <div class="box"><h5 <i class="bi bi-car-front"></i> &nbsp; Segment</h5></div> 
+                        @foreach (var item in Model.Segments)
+                        {
+                            <div class="form-check">
+                                <input
+                                 @(item.SegmentId == Model.SelSegmentId ? "checked" : "")
+                                 type="radio" class="form-check-input auto-submit" name="SelSegmentId"
+                                    value="@item.SegmentId" />
+                                <label class="form-check-label">@item.SegmentName</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div>
+                @if (TempData["Message"] != null)
+                {
+                    <h1>@TempData["Message"]</h1>
+                }
+                else
+                {
+                    <div class="row">
+                        @foreach (var car in Model.Cars)
+                        {
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                  <a href="/Reservation/Index?carId=@car.CarId">  
+                                    <img src="@car.ImageUrl" alt="@car.CarName">
+                                    <div class="card-body">
+                                            <h1 style="color: red;" class="card-title">@car.CarName</h1>
+                                            <p> <i class="bi bi-geo-alt-fill"></i> &nbsp;@car.RentStoresName</p>
+                                            <p> <i class="bi bi-fuel-pump-diesel"></i> &nbsp;@car.FuelTypeName</p>
+                                            <p><i class="bi bi-car-front"></i> &nbsp;@car.SegmentName</p>
+                                            <p><i class="bi bi-gear-wide-connected"> </i> &nbsp; @car.TransmissionName</p>
+                                            <p>@car.DepositPrice TL</p>
+                                    </div>
+                                  </a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".auto-submit").forEach(input => {
+            input.addEventListener("change", function () {
+                this.closest("form").submit();
+            });
+        });
+    });
+</script>
+

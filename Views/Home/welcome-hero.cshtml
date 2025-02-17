@@ -1,0 +1,85 @@
+@model IndexPageMainModel
+
+
+<style>
+	.simpleFormWrapper {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+
+	.simpleFormElement {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+	
+	}
+
+	.primary {
+		flex-direction: column;
+		gap: 1rem;
+	}
+</style>
+<!--welcome-hero start -->
+<section id="home" class="welcome-hero">
+
+
+	<div class="container">
+		<div class="welcome-hero-txt">
+			<h2>Hayalinizdeki araca en cazip fiyatlarla ulaşın, özgürlüğün tadını çıkarın!</h2>
+			<p>
+				Rüya gibi bir yolculuk başlamak üzere, Wander Rider ile maceraya hazır mısın?
+			</p>
+
+		</div>
+	</div>
+
+	<form method="post" action="/Home/Index" class="container">
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="model-search-content">
+
+					<div class="simpleFormWrapper">
+						<div class="simpleFormElement ">
+							<label>Alış Ofisi Seçiniz</label>
+							<select style="width: 25rem; height: 4rem;" asp-for="@Model.SelectedOfficeId">
+
+								@foreach (var item in Model.RentStores)
+								{
+									<option value="@item.RentStoresId">@item.RentStoresName
+									</option>
+								}
+							</select>
+						</div>
+						<div class="simpleFormElement">
+							<div style="width: 25rem; height: 4rem;">
+								<label asp-for="PickupDate">Alis Tarihi</label>
+								<input asp-for="PickupDate" type="date" style="width: 25rem; height: 4rem;">
+							</div>
+						</div>
+						<div class="simpleFormElement">
+							<div>
+								<label asp-for="ReturnDate">İade Tarihi</label>
+								<input asp-for="ReturnDate" type="date" style="width: 25rem; height: 4rem;">
+							</div>
+						</div>
+						<div class="simpleFormElement text-center">
+							<button style="height: 4rem; width: 15rem;" class="btn btn-primary"
+								onclick="window.location.href='#'">
+								search
+							</button>
+							@if (TempData["Message"] != null)
+							{
+								<h1>@TempData["Message"]</h1>
+							}
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+	</form>
+
+</section><!--/.welcome-hero-->
+<!--welcome-hero end -->

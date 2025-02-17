@@ -1,0 +1,31 @@
+@model List<CarVM>
+
+<style>
+    .container{margin-bottom: 2rem;}
+</style>
+
+<div class="container">
+    <h2 class="page-title">Araç Filomuz</h2>
+    <div class="row">
+
+        @foreach (var car in Model)
+        {
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <img src="@car.ImageUrl" class="card-img-top" alt=@car.CarName>
+                    <div class="card-body">
+                        
+                        <h5 style="color: red;"class="card-title">@car.CarName</h5>
+                        <p><i class="bi bi-geo-alt-fill"></i> &nbsp;@car.RentStoresName </p>
+                        <p> <i class="bi bi-fuel-pump-diesel"></i> &nbsp;@car.FuelTypeName</p>
+                        <p> <i class="bi bi-car-front"></i> &nbsp;@car.SegmentName</p>
+                        <p> <i class="bi bi-gear-wide-connected"> </i> &nbsp;@car.TransmissionName</p>
+                        <p>@car.DepositPrice TL</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+
+</div>

@@ -1,0 +1,124 @@
+@model AdminAddCarModel
+
+<style>
+    .h3{margin-top: 15rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;}
+    .row{margin-left: 20rem;}
+    .text-end{margin-left: 20rem;
+                margin-bottom: 3rem;}
+</style>
+
+<h1 class="h3">Araç Ekle</h1>
+<hr>
+
+<div class="row">
+    <div class="col-md-8">
+        <form asp-controller="Admin" asp-action="CreateCar" method="post">
+            <!-- Araç Adı -->
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label">Araç Adı</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" asp-for="@Model.CarName" placeholder="Araç adını girin">
+                    <span class="text-danger" asp-validation-for="@Model.CarName"></span>
+                </div>
+            </div>
+
+            <!-- Model (Yıl) -->
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label">Model (Yıl)</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" asp-for="@Model.Model" placeholder="Model yılını girin">
+                    <span class="text-danger" asp-validation-for="@Model.Model"></span>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label">Depozito Ucreti</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" asp-for="@Model.DepositPrice"
+                        placeholder="Depozito Ucreti girin">
+                    <span class="text-danger" asp-validation-for="@Model.DepositPrice"></span>
+                </div>
+            </div>
+
+            <!-- Yakıt Tipi (Fuel Type) -->
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label">Yakıt Tipi</label>
+                <div class="col-sm-10">
+                    <select class="form-select" asp-for="@Model.SelFuelTypeId">
+                        @foreach (var item in Model.FuelTypes)
+                        {
+                            <option value="@item.FuelTypeId">@item.FuelTypeName
+                            </option>
+                        }
+                    </select>
+                    <span class="text-danger" asp-validation-for="@Model.SelFuelTypeId"></span>
+                </div>
+            </div>
+
+            <!-- Segment (Segment Type) -->
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label">Segment</label>
+                <div class="col-sm-10">
+                    <select class="form-select" asp-for="@Model.SelSegmentId">
+                        @foreach (var item in Model.Segments)
+                        {
+                            <option value="@item.SegmentId">@item.SegmentName
+                            </option>
+                        }
+                    </select>
+                    <span class="text-danger" asp-validation-for="@Model.SelSegmentId"></span>
+                </div>
+            </div>
+
+            <!-- Vites Türü (Transmission Type) -->
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label">Vites Türü</label>
+                <div class="col-sm-10">
+                    <select class="form-select" asp-for="@Model.SelTransmissionId">
+                        @foreach (var item in Model.Transmissions)
+                        {
+                            <option value="@item.TransmissionId">@item.TransmissionName</option>
+                        }
+                    </select>
+                    <span class="text-danger" asp-validation-for="@Model.SelTransmissionId"></span>
+                </div>
+            </div>
+
+            <!-- Rent Store (Kiralama Noktası) -->
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label" asp-for="@Model.SelRentStoreId">Kiralama Ofisi</label>
+                <div class="col-sm-10">
+                    <select class="form-select" asp-for="@Model.SelRentStoreId">
+                        @foreach (var item in Model.RentStores)
+                        {
+                            <option value="@item.RentStoresId">@item.RentStoresName</option>
+                        }
+                    </select>
+                    <span class="text-danger" asp-validation-for="@Model.SelRentStoreId"></span>
+                </div>
+            </div>
+
+            <!-- Araç Resmi URL -->
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label">Araç Resmi (URL)</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" asp-for="@Model.ImageUrl"
+                        placeholder="Araç resim URL’sini girin">
+                    <span class="text-danger" asp-validation-for="@Model.ImageUrl"></span>
+                </div>
+            </div>
+
+            <!-- Kaydet Butonu -->
+            <div class="text-end">
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </div>
+        </form>
+        @if (TempData["Message"] != null)
+    {
+        <h1>@TempData["Message"]</h1>
+    }
+    </div>
+</div>

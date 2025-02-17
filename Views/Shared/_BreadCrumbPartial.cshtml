@@ -1,0 +1,52 @@
+@model BreadCrumbModel
+
+
+
+<style>
+    .bannerWrapper{
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #383838;
+        padding: 2rem 10rem ;
+        margin: 114px 0;
+    }
+
+    .banner{
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+    .active{
+        color: white !important; 
+    }
+    .icon{
+        height: 20px;
+        width: 20px;
+    }
+    .date{
+        color: white;
+    }
+
+</style>
+
+<div class="bannerWrapper">
+    
+    <div class="banner">
+        
+        <h1 class="@(Model.Step == 1 ? "active" : "")" >
+          <i class="icon bi bi-car-front-fill"></i>  Arac Secimi 
+        </h1>
+        
+        <h1 class="@(Model.Step == 2 ? "active" : "")">
+          <i class="icon bi bi-journal-check"></i>  Rezervasyon 
+        </h1>
+    </div>
+
+    <div class="banner">
+        <h1 class="date">@Model.PickUpDate</h1>
+        <i class="bi bi-calendar-date"></i>
+        <h1 class="date">@Model.ReturnDate</h1>
+    </div>
+</div>
